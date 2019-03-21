@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.3.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.0-rc15"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@4.0.0-rc1"></script>
+  </head>
+  <body>
+    <div id="vis"></div>
+
+    <script type="text/javascript">
+      var yourVlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+  "description": "A trellis bar chart showing the US population distribution of age groups and gender in 2000.",
+  "data": { "url": "https://raw.githubusercontent.com/anvi10/housing/master/sf_data.json"},
+  "transform": [
+    {"filter": "datum.price <= 10000000"},
+    {"calculate": "datum.in_sf == 1 ? 'San Francisco' : 'New York'", "as": "city"}
+  ],
+  "mark": "bar",
+  "encoding": {
+    "row": {"field": "city", "type": "nominal"},
+    "y": {
+      "field": "price", "type": "quantitative",
+      "scale": {"rangeStep": 10}
+      
+    },
+    "x": {
+      "field": "sqft", "type": "quantitative",
+      "scale": {"rangeStep": 10}
+      
+    },
+    "color": {
+      "field": "city", "type": "nominal",
+      "scale": {"range": ["#CA65B5", "#CAC465"]}
+    }
+  }
+      };
+      vegaEmbed('#vis', yourVlSpec);
+    </script>
+  </body>
+</html>
